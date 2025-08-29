@@ -35,6 +35,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined)
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || 
   (process.env.NODE_ENV === 'production' 
     ? 'https://aurora-backend-sd5l.onrender.com/api' 
+
     : 'http://localhost:3001/api')
 
 axios.defaults.baseURL = API_BASE_URL
