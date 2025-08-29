@@ -1,0 +1,228 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  /* Updated color tokens for AuroraGold futuristic fintech theme */
+  --background: oklch(0.12 0.05 240); /* Deep navy background */
+  --foreground: oklch(0.95 0.01 240); /* Light foreground text */
+  --card: oklch(0.15 0.05 240); /* Slightly lighter navy for cards */
+  --card-foreground: oklch(0.95 0.01 240); /* Light text on cards */
+  --popover: oklch(0.98 0.01 240 / 0.95); /* Glassmorphism popover */
+  --popover-foreground: oklch(0.2 0.02 240); /* Dark text on popover */
+  --primary: oklch(0.8 0.15 85); /* Gold primary color */
+  --primary-foreground: oklch(0.12 0.05 240); /* Navy text on gold */
+  --secondary: oklch(0.25 0.05 240); /* Muted navy secondary */
+  --secondary-foreground: oklch(0.9 0.01 240); /* Light text on secondary */
+  --muted: oklch(0.3 0.03 240); /* Muted elements */
+  --muted-foreground: oklch(0.7 0.02 240); /* Muted text */
+  --accent: oklch(0.8 0.15 85); /* Gold accent */
+  --accent-foreground: oklch(0.12 0.05 240); /* Navy text on accent */
+  --destructive: oklch(0.577 0.245 27.325);
+  --destructive-foreground: oklch(0.985 0.01 240);
+  --border: oklch(0.3 0.03 240 / 0.3); /* Subtle borders */
+  --input: oklch(0.2 0.05 240); /* Input backgrounds */
+  --ring: oklch(0.8 0.15 85 / 0.5); /* Gold focus ring */
+  --chart-1: oklch(0.8 0.15 85); /* Gold for charts */
+  --chart-2: oklch(0.7 0.12 180); /* Teal accent */
+  --chart-3: oklch(0.6 0.1 300); /* Purple accent */
+  --chart-4: oklch(0.5 0.08 120); /* Green accent */
+  --chart-5: oklch(0.8 0.15 85 / 0.3); /* Transparent gold */
+  --radius: 0.75rem; /* Larger radius for futuristic feel */
+  --sidebar: oklch(0.12 0.05 240);
+  --sidebar-foreground: oklch(0.95 0.01 240);
+  --sidebar-primary: oklch(0.8 0.15 85);
+  --sidebar-primary-foreground: oklch(0.12 0.05 240);
+  --sidebar-accent: oklch(0.25 0.05 240);
+  --sidebar-accent-foreground: oklch(0.9 0.01 240);
+  --sidebar-border: oklch(0.3 0.03 240 / 0.2);
+  --sidebar-ring: oklch(0.8 0.15 85 / 0.5);
+}
+
+.dark {
+  /* Dark mode uses same colors as this is already a dark theme */
+  --background: oklch(0.08 0.05 240); /* Even darker for dark mode */
+  --foreground: oklch(0.98 0.01 240);
+  --card: oklch(0.12 0.05 240);
+  --card-foreground: oklch(0.98 0.01 240);
+  --popover: oklch(0.15 0.05 240 / 0.95);
+  --popover-foreground: oklch(0.95 0.01 240);
+  --primary: oklch(0.85 0.18 85);
+  --primary-foreground: oklch(0.08 0.05 240);
+  --secondary: oklch(0.2 0.05 240);
+  --secondary-foreground: oklch(0.95 0.01 240);
+  --muted: oklch(0.25 0.03 240);
+  --muted-foreground: oklch(0.75 0.02 240);
+  --accent: oklch(0.85 0.18 85);
+  --accent-foreground: oklch(0.08 0.05 240);
+  --destructive: oklch(0.396 0.141 25.723);
+  --destructive-foreground: oklch(0.98 0.01 240);
+  --border: oklch(0.25 0.03 240 / 0.3);
+  --input: oklch(0.15 0.05 240);
+  --ring: oklch(0.85 0.18 85 / 0.5);
+  --chart-1: oklch(0.85 0.18 85);
+  --chart-2: oklch(0.75 0.15 180);
+  --chart-3: oklch(0.65 0.12 300);
+  --chart-4: oklch(0.55 0.1 120);
+  --chart-5: oklch(0.85 0.18 85 / 0.3);
+  --sidebar: oklch(0.08 0.05 240);
+  --sidebar-foreground: oklch(0.98 0.01 240);
+  --sidebar-primary: oklch(0.85 0.18 85);
+  --sidebar-primary-foreground: oklch(0.08 0.05 240);
+  --sidebar-accent: oklch(0.2 0.05 240);
+  --sidebar-accent-foreground: oklch(0.95 0.01 240);
+  --sidebar-border: oklch(0.25 0.03 240 / 0.2);
+  --sidebar-ring: oklch(0.85 0.18 85 / 0.5);
+}
+
+@theme inline {
+  --font-sans: var(--font-unica-one);
+  --font-mono: var(--font-geist-mono);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    @apply bg-background text-foreground;
+  }
+  
+  /* Hide scrollbars globally while maintaining scroll functionality */
+  * {
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* Internet Explorer 10+ */
+  }
+  
+  *::-webkit-scrollbar {
+    display: none; /* Safari and Chrome */
+  }
+  
+  /* Ensure chat message containers also hide scrollbars */
+  .overflow-y-auto {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  
+  .overflow-y-auto::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* Added custom animations for aurora effects and futuristic elements */
+@keyframes aurora {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+@keyframes glow {
+  0%,
+  100% {
+    box-shadow: 0 0 20px oklch(0.8 0.15 85 / 0.3);
+  }
+  50% {
+    box-shadow: 0 0 40px oklch(0.8 0.15 85 / 0.6);
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes pulse-gold {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+.aurora-bg {
+  background: linear-gradient(
+    -45deg,
+    oklch(0.12 0.05 240),
+    oklch(0.15 0.08 260),
+    oklch(0.18 0.06 220),
+    oklch(0.12 0.05 240)
+  );
+  background-size: 400% 400%;
+  animation: aurora 15s ease infinite;
+}
+
+.glow-gold {
+  animation: glow 2s ease-in-out infinite alternate;
+}
+
+.float-animation {
+  animation: float 3s ease-in-out infinite;
+}
+
+.pulse-gold {
+  animation: pulse-gold 2s ease-in-out infinite;
+}
+
+.glassmorphism {
+  background: oklch(0.95 0.01 240 / 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid oklch(0.8 0.15 85 / 0.2);
+}
+
+.neumorphism {
+  background: oklch(0.15 0.05 240);
+  box-shadow: 8px 8px 16px oklch(0.08 0.05 240), -8px -8px 16px oklch(0.22 0.05 240);
+}
