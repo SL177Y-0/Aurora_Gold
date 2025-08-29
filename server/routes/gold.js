@@ -310,7 +310,7 @@ router.post('/orders/:orderId/pay', authenticateToken, async (req, res) => {
         })
         
         try {
-          await req.user.updateAssets(order.grams, order.pricePerGram)
+        await req.user.updateAssets(order.grams, order.pricePerGram)
           console.log('User assets updated successfully (sim mode)')
         } catch (updateError) {
           console.error('Error updating user assets:', updateError)
@@ -409,7 +409,7 @@ router.post('/orders/:orderId/pay', authenticateToken, async (req, res) => {
         })
         
         try {
-          await req.user.updateAssets(order.grams, order.pricePerGram)
+        await req.user.updateAssets(order.grams, order.pricePerGram)
           console.log('User assets updated successfully (fallback mode)')
         } catch (updateError) {
           console.error('Error updating user assets:', updateError)

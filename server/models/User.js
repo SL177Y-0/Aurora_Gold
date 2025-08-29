@@ -98,8 +98,8 @@ userSchema.methods.updateAssets = function(grams, pricePerGram) {
       avgPrice: this.assets.avgPrice
     })
     
-    const newTotalGrams = this.assets.goldGrams + grams
-    const newTotalInvested = this.assets.totalInvested + (grams * pricePerGram)
+  const newTotalGrams = this.assets.goldGrams + grams
+  const newTotalInvested = this.assets.totalInvested + (grams * pricePerGram)
     
     // Validate inputs
     if (isNaN(grams) || grams <= 0) {
@@ -108,9 +108,9 @@ userSchema.methods.updateAssets = function(grams, pricePerGram) {
     if (isNaN(pricePerGram) || pricePerGram <= 0) {
       throw new Error(`Invalid pricePerGram value: ${pricePerGram}`)
     }
-    
-    this.assets.goldGrams = newTotalGrams
-    this.assets.totalInvested = newTotalInvested
+  
+  this.assets.goldGrams = newTotalGrams
+  this.assets.totalInvested = newTotalInvested
     this.assets.avgPrice = newTotalGrams > 0 ? newTotalInvested / newTotalGrams : 0
     
     console.log('New assets calculated:', {
@@ -118,8 +118,8 @@ userSchema.methods.updateAssets = function(grams, pricePerGram) {
       totalInvested: this.assets.totalInvested,
       avgPrice: this.assets.avgPrice
     })
-    
-    return this.save()
+  
+  return this.save()
   } catch (error) {
     console.error('UpdateAssets error:', error)
     throw error

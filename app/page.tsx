@@ -415,43 +415,43 @@ export default function AuroraGoldApp() {
   return (
     <div className="min-h-screen aurora-bg">
       {/* Header */}
-      <header className="border-b border-border/20 backdrop-blur-sm bg-background/50">
-        <div className="container mx-auto px-4 py-4">
+      <header className="border-b border-border/20 backdrop-blur-sm bg-background/50 sticky top-0 z-50">
+        <div className="container mx-auto px-2 sm:px-4 py-2 sm:py-4">
           <div className="flex items-center justify-between">
-            <div className="flex items-center">
+            <div className="flex items-center space-x-2 sm:space-x-3">
               <Image 
                 src="/logo.png" 
                 alt="AuroraGold Logo" 
-                width={60} 
-                height={60} 
-                className="object-contain" 
+                width={40} 
+                height={40} 
+                className="object-contain sm:w-[60px] sm:h-[60px]" 
                 priority
               />
               <div>
-                <h1 className="text-2xl font-bold text-foreground tracking-wide">AuroraGold</h1>
-                <p className="text-sm text-muted-foreground">AI Finance Assistant</p>
+                <h1 className="text-lg sm:text-2xl font-bold text-foreground tracking-wide">AuroraGold</h1>
+                <p className="text-xs sm:text-sm text-muted-foreground">AI Finance Assistant</p>
               </div>
             </div>
 
-            <div className="flex items-center space-x-4">
+            <div className="flex items-center space-x-2 sm:space-x-4">
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="outline" className="glassmorphism bg-transparent">
+                  <Button variant="outline" className="glassmorphism bg-transparent text-xs sm:text-sm px-2 sm:px-4">
                     {currentPageInfo && (
                       <>
-                        <currentPageInfo.icon className="w-4 h-4 mr-2" />
-                        {currentPageInfo.label}
-                        <ChevronDown className="w-4 h-4 ml-2" />
+                        <currentPageInfo.icon className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
+                        <span className="hidden xs:inline">{currentPageInfo.label}</span>
+                        <ChevronDown className="w-3 h-3 sm:w-4 sm:h-4 ml-1 sm:ml-2" />
                       </>
                     )}
                   </Button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent className="glassmorphism border-border/20">
+                <DropdownMenuContent className="glassmorphism border-border/20 w-48">
                   {navigationItems.map((item) => (
                     <DropdownMenuItem
                       key={item.id}
                       onClick={() => setCurrentPage(item.id)}
-                      className="flex items-center gap-2 cursor-pointer"
+                      className="flex items-center gap-2 cursor-pointer text-sm"
                     >
                       <item.icon className="w-4 h-4" />
                       {item.label}
@@ -460,7 +460,7 @@ export default function AuroraGoldApp() {
                   {user && (
                     <DropdownMenuItem
                       onClick={logout}
-                      className="flex items-center gap-2 cursor-pointer text-red-400"
+                      className="flex items-center gap-2 cursor-pointer text-red-400 text-sm"
                     >
                       <LogIn className="w-4 h-4" />
                       Logout
@@ -469,22 +469,23 @@ export default function AuroraGoldApp() {
                 </DropdownMenuContent>
               </DropdownMenu>
 
-              <Badge variant="secondary" className="glassmorphism">
+              <Badge variant="secondary" className="glassmorphism text-xs px-2 py-1">
                 {(() => {
                   console.log('Gold price state in badge:', goldPrice)
                   return goldPrice?.price ? (
-                    <>
-                      Gold: ₹{goldPrice.price}/g
+                    <div className="flex items-center">
+                      <span className="hidden sm:inline">Gold: </span>
+                      <span>₹{goldPrice.price}/g</span>
                       {goldPrice?.change.trend === 'up' ? (
-                        <ArrowUp className="w-3 h-3 ml-1 text-green-400" />
+                        <ArrowUp className="w-2 h-2 sm:w-3 sm:h-3 ml-1 text-green-400" />
                       ) : (
-                        <ArrowUp className="w-3 h-3 ml-1 text-red-400 rotate-180" />
+                        <ArrowUp className="w-2 h-2 sm:w-3 sm:h-3 ml-1 text-red-400 rotate-180" />
                       )}
-                    </>
+                    </div>
                   ) : (
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-1 sm:gap-2">
                       <LoadingSpinner size="sm" />
-                      <span>Loading price...</span>
+                      <span className="hidden sm:inline">Loading...</span>
                     </div>
                   )
                 })()
@@ -492,7 +493,7 @@ export default function AuroraGoldApp() {
               </Badge>
               
               {user && (
-                <div className="text-sm">
+                <div className="text-xs sm:text-sm hidden md:block">
                   <span className="text-muted-foreground">Welcome, </span>
                   <span className="font-medium">{user.name}</span>
                 </div>
@@ -503,16 +504,16 @@ export default function AuroraGoldApp() {
       </header>
 
       {/* Main Content */}
-      <main className="container mx-auto px-4 py-8">
+      <main className="container mx-auto px-2 sm:px-4 py-4 sm:py-8">
         {/* Login Page */}
         {currentPage === "login" && (
           <div className="max-w-md mx-auto space-y-6">
-            <Card className="neumorphism border-border/20">
-              <CardHeader className="text-center">
-                <CardTitle className="text-2xl">Welcome Back</CardTitle>
-                <CardDescription>Sign in to your AuroraGold account</CardDescription>
+            <Card className="neumorphism border-border/20 mx-2 sm:mx-0">
+              <CardHeader className="text-center px-4 sm:px-6">
+                <CardTitle className="text-xl sm:text-2xl">Welcome Back</CardTitle>
+                <CardDescription className="text-sm">Sign in to your AuroraGold account</CardDescription>
               </CardHeader>
-              <CardContent className="space-y-4">
+              <CardContent className="space-y-4 px-4 sm:px-6">
                 <div className="space-y-2">
                   <label className="text-sm font-medium">Email</label>
                   <Input
@@ -545,7 +546,7 @@ export default function AuroraGoldApp() {
                   <Button
                     variant="link"
                     onClick={() => setCurrentPage("signup")}
-                    className="text-primary hover:text-primary/80"
+                    className="text-primary hover:text-primary/80 text-sm"
                   >
                     Don't have an account? Sign up
                   </Button>
@@ -558,12 +559,12 @@ export default function AuroraGoldApp() {
         {/* Signup Page */}
         {currentPage === "signup" && (
           <div className="max-w-md mx-auto space-y-6">
-            <Card className="neumorphism border-border/20">
-              <CardHeader className="text-center">
-                <CardTitle className="text-2xl">Create Account</CardTitle>
-                <CardDescription>Join AuroraGold and start investing in gold</CardDescription>
+            <Card className="neumorphism border-border/20 mx-2 sm:mx-0">
+              <CardHeader className="text-center px-4 sm:px-6">
+                <CardTitle className="text-xl sm:text-2xl">Create Account</CardTitle>
+                <CardDescription className="text-sm">Join AuroraGold and start investing in gold</CardDescription>
               </CardHeader>
-              <CardContent className="space-y-4">
+              <CardContent className="space-y-4 px-4 sm:px-6">
                 <div className="space-y-2">
                   <label className="text-sm font-medium">Full Name</label>
                   <Input
@@ -615,7 +616,7 @@ export default function AuroraGoldApp() {
                   <Button
                     variant="link"
                     onClick={() => setCurrentPage("login")}
-                    className="text-primary hover:text-primary/80"
+                    className="text-primary hover:text-primary/80 text-sm"
                   >
                     Already have an account? Sign in
                   </Button>
@@ -628,37 +629,37 @@ export default function AuroraGoldApp() {
         {/* Chat Page */}
         {currentPage === "chat" && (
           <div className="space-y-6">
-            <Card className="neumorphism border-border/20">
-              <CardHeader>
+            <Card className="neumorphism border-border/20 mx-2 sm:mx-0">
+              <CardHeader className="px-4 sm:px-6">
                 <div className="flex items-center space-x-3">
-                  <Avatar className="w-12 h-12 float-animation">
+                  <Avatar className="w-10 h-10 sm:w-12 sm:h-12 float-animation">
                     <AvatarImage 
                       src="/bot.png" 
                       alt="Aurora AI" 
                       className="object-cover"
                     />
                     <AvatarFallback className="bg-gradient-to-r from-primary to-chart-2 text-primary-foreground">
-                      <Bot className="w-6 h-6" />
+                      <Bot className="w-5 h-5 sm:w-6 sm:h-6" />
                     </AvatarFallback>
                   </Avatar>
-                  <div>
-                    <CardTitle className="text-foreground">Aurora AI</CardTitle>
-                    <CardDescription>Your personal finance assistant</CardDescription>
+                  <div className="flex-1">
+                    <CardTitle className="text-foreground text-lg sm:text-xl">Aurora AI</CardTitle>
+                    <CardDescription className="text-sm">Your personal finance assistant</CardDescription>
                   </div>
                   <div className="ml-auto">
-                    <div className="w-3 h-3 bg-green-400 rounded-full pulse-gold"></div>
+                    <div className="w-2 h-2 sm:w-3 sm:h-3 bg-green-400 rounded-full pulse-gold"></div>
                   </div>
                 </div>
               </CardHeader>
-              <CardContent>
-                <div className="space-y-4 max-h-96 overflow-y-auto scroll-smooth">
+              <CardContent className="px-4 sm:px-6">
+                <div className="space-y-4 max-h-[60vh] sm:max-h-96 overflow-y-auto scroll-smooth">
                   {messages.map((message) => (
                     <div
                       key={message.id}
                       className={`flex ${message.role === "user" ? "justify-end" : "justify-start"}`}
                     >
                       <div
-                        className={`max-w-xs lg:max-w-md px-4 py-2 rounded-2xl ${
+                        className={`max-w-[85%] sm:max-w-xs lg:max-w-md px-3 sm:px-4 py-2 rounded-2xl text-sm sm:text-base ${
                           message.role === "user"
                             ? "bg-primary text-primary-foreground"
                             : "glassmorphism text-foreground"
@@ -673,7 +674,7 @@ export default function AuroraGoldApp() {
                                   key={index}
                                   variant={option.variant as "default" | "outline"}
                                   size="sm"
-                                  className={option.variant === 'default' ? 'glow-gold' : 'glassmorphism bg-transparent'}
+                                  className={`${option.variant === 'default' ? 'glow-gold' : 'glassmorphism bg-transparent'} text-xs sm:text-sm`}
                                   onClick={() => {
                                     if (option.action === 'navigate_buy') {
                                       setCurrentPage('buy')
@@ -887,7 +888,7 @@ export default function AuroraGoldApp() {
                   ))}
                   {chatLoading && (
                     <div className="flex justify-start">
-                      <div className="max-w-xs lg:max-w-md px-4 py-2 rounded-2xl glassmorphism text-foreground">
+                      <div className="max-w-[85%] sm:max-w-xs lg:max-w-md px-3 sm:px-4 py-2 rounded-2xl glassmorphism text-foreground">
                         <div className="flex items-center space-x-2">
                           <div className="w-2 h-2 bg-primary rounded-full animate-pulse"></div>
                           <div className="w-2 h-2 bg-primary rounded-full animate-pulse" style={{ animationDelay: '0.2s' }}></div>
@@ -901,192 +902,7 @@ export default function AuroraGoldApp() {
 
                 {/* Quick Actions */}
                 <div className="flex flex-wrap gap-2 mt-4">
-                  <Button 
-                    variant="outline" 
-                    size="sm" 
-                    className="glassmorphism bg-transparent"
-                    onClick={async () => {
-                      const message = "I want to buy ₹500 worth of gold"
-                      setChatMessage(message)
-                      
-                      const newMessage: ChatMessage = {
-                        id: Date.now().toString(),
-                        role: 'user',
-                        content: message,
-                        timestamp: new Date()
-                      }
-                      
-                      setMessages(prev => [...prev, newMessage])
-                      setChatMessage("")
-                      setChatLoading(true)
-
-                      try {
-                        const response = await api.post('/chat', {
-                          message: message,
-                          sessionId
-                        })
-                        
-                        const data: ChatResponse = response.data
-                        
-                        if (!sessionId) {
-                          setSessionId(data.sessionId)
-                        }
-                        
-                        const aiMessage: ChatMessage = {
-                          id: data.message.id,
-                          role: 'assistant',
-                          content: data.message.content,
-                          timestamp: new Date(data.message.timestamp)
-                        }
-                        
-                        setMessages(prev => [...prev, aiMessage])
-                        
-                        if (data.ai.shouldOfferPurchase && data.ai.suggestedAmount) {
-                          setGoldAmount(data.ai.suggestedAmount.toString())
-                        }
-                        
-                        // The choice buttons will be added by the previous logic
-                        
-                      } catch (error) {
-                        console.error('Chat error:', error)
-                        toast({
-                          title: "Error",
-                          description: "Failed to send message. Please try again.",
-                          variant: "destructive"
-                        })
-                      } finally {
-                        setChatLoading(false)
-                      }
-                    }}
-                  >
-                    Buy ₹500 Gold
-                  </Button>
-                  <Button 
-                    variant="outline" 
-                    size="sm" 
-                    className="glassmorphism bg-transparent"
-                    onClick={async () => {
-                      if (user) {
-                        setCurrentPage('portfolio')
-                      } else {
-                        const message = "Please show me my portfolio"
-                        setChatMessage(message)
-                        
-                        const newMessage: ChatMessage = {
-                          id: Date.now().toString(),
-                          role: 'user',
-                          content: message,
-                          timestamp: new Date()
-                        }
-                        
-                        setMessages(prev => [...prev, newMessage])
-                        setChatMessage("")
-                        setChatLoading(true)
-
-                        try {
-                          const response = await api.post('/chat', {
-                            message: message,
-                            sessionId
-                          })
-                          
-                          const data: ChatResponse = response.data
-                          
-                          if (!sessionId) {
-                            setSessionId(data.sessionId)
-                          }
-                          
-                          const aiMessage: ChatMessage = {
-                            id: data.message.id,
-                            role: 'assistant',
-                            content: data.message.content,
-                            timestamp: new Date(data.message.timestamp)
-                          }
-                          
-                          setMessages(prev => [...prev, aiMessage])
-                          
-                          if (data.ai.requireLogin && !user) {
-                            toast({
-                              title: "Login Required",
-                              description: "Please log in to continue with this action.",
-                              action: (
-                                <Button
-                                  variant="outline"
-                                  size="sm"
-                                  onClick={() => setCurrentPage('login')}
-                                >
-                                  Login
-                                </Button>
-                              )
-                            })
-                          }
-                        } catch (error) {
-                          console.error('Chat error:', error)
-                          toast({
-                            title: "Error",
-                            description: "Failed to send message. Please try again.",
-                            variant: "destructive"
-                          })
-                        } finally {
-                          setChatLoading(false)
-                        }
-                      }
-                    }}
-                  >
-                    Show My Portfolio
-                  </Button>
-                  <Button 
-                    variant="outline" 
-                    size="sm" 
-                    className="glassmorphism bg-transparent"
-                    onClick={async () => {
-                      const message = "What is the gold price today?"
-                      setChatMessage(message)
-                      
-                      const newMessage: ChatMessage = {
-                        id: Date.now().toString(),
-                        role: 'user',
-                        content: message,
-                        timestamp: new Date()
-                      }
-                      
-                      setMessages(prev => [...prev, newMessage])
-                      setChatMessage("")
-                      setChatLoading(true)
-
-                      try {
-                        const response = await api.post('/chat', {
-                          message: message,
-                          sessionId
-                        })
-                        
-                        const data: ChatResponse = response.data
-                        
-                        if (!sessionId) {
-                          setSessionId(data.sessionId)
-                        }
-                        
-                        const aiMessage: ChatMessage = {
-                          id: data.message.id,
-                          role: 'assistant',
-                          content: data.message.content,
-                          timestamp: new Date(data.message.timestamp)
-                        }
-                        
-                        setMessages(prev => [...prev, aiMessage])
-                      } catch (error) {
-                        console.error('Chat error:', error)
-                        toast({
-                          title: "Error",
-                          description: "Failed to send message. Please try again.",
-                          variant: "destructive"
-                        })
-                      } finally {
-                        setChatLoading(false)
-                      }
-                    }}
-                  >
-                    Gold Price Today
-                  </Button>
+                  {/* Buttons removed as requested */}
                 </div>
 
                 {/* Message Input */}
@@ -1097,14 +913,14 @@ export default function AuroraGoldApp() {
                     onChange={(e) => setChatMessage(e.target.value)}
                     onKeyPress={(e) => e.key === "Enter" && !chatLoading && sendMessage()}
                     disabled={chatLoading}
-                    className="glassmorphism border-border/20"
+                    className="glassmorphism border-border/20 text-sm sm:text-base"
                   />
                   <Button 
                     onClick={sendMessage} 
-                    className="glow-gold"
+                    className="glow-gold px-3 sm:px-4"
                     disabled={chatLoading || !chatMessage.trim()}
                   >
-                    <Send className="w-4 h-4" />
+                    <Send className="w-3 h-3 sm:w-4 sm:h-4" />
                   </Button>
                 </div>
               </CardContent>
@@ -1115,19 +931,19 @@ export default function AuroraGoldApp() {
         {/* Buy Gold Page */}
         {currentPage === "buy" && (
           <div className="space-y-6">
-            <div className="grid gap-6 md:grid-cols-2">
-              <Card className="neumorphism border-border/20">
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <Coins className="w-5 h-5 text-primary" />
+            <div className="grid gap-6 lg:grid-cols-2">
+              <Card className="neumorphism border-border/20 mx-2 sm:mx-0">
+                <CardHeader className="px-4 sm:px-6">
+                  <CardTitle className="flex items-center gap-2 text-lg sm:text-xl">
+                    <Coins className="w-4 h-4 sm:w-5 sm:h-5 text-primary" />
                     Current Gold Price
                   </CardTitle>
                 </CardHeader>
-                <CardContent>
+                <CardContent className="px-4 sm:px-6">
                   <div className="text-center space-y-4">
                     {goldPrice?.price ? (
                       <>
-                        <div className="text-4xl font-bold text-primary">₹{goldPrice.price.toLocaleString()}</div>
+                        <div className="text-3xl sm:text-4xl font-bold text-primary">₹{goldPrice.price.toLocaleString()}</div>
                         <div className="text-sm text-muted-foreground">per gram</div>
                         <Badge variant="secondary" className="glassmorphism">
                           {goldPrice?.change.trend === 'up' ? (
@@ -1155,17 +971,17 @@ export default function AuroraGoldApp() {
                 </CardContent>
               </Card>
 
-              <Card className="neumorphism border-border/20">
-                <CardHeader>
-                  <CardTitle>Buy Gold</CardTitle>
-                  <CardDescription>Enter amount in INR</CardDescription>
+              <Card className="neumorphism border-border/20 mx-2 sm:mx-0">
+                <CardHeader className="px-4 sm:px-6">
+                  <CardTitle className="text-lg sm:text-xl">Buy Gold</CardTitle>
+                  <CardDescription className="text-sm">Enter amount in INR</CardDescription>
                 </CardHeader>
-                <CardContent className="space-y-4">
+                <CardContent className="space-y-4 px-4 sm:px-6">
                   <Input
                     placeholder="Enter amount (₹)"
                     value={goldAmount}
                     onChange={(e) => setGoldAmount(e.target.value)}
-                    className="glassmorphism border-border/20"
+                    className="glassmorphism border-border/20 text-lg"
                   />
                   <div className="space-y-2 text-sm">
                     <div className="flex justify-between">
@@ -1417,20 +1233,20 @@ export default function AuroraGoldApp() {
             </div>
 
             {/* Quick Buy Options */}
-            <Card className="neumorphism border-border/20">
-              <CardHeader>
-                <CardTitle>Quick Buy</CardTitle>
+            <Card className="neumorphism border-border/20 mx-2 sm:mx-0">
+              <CardHeader className="px-4 sm:px-6">
+                <CardTitle className="text-lg sm:text-xl">Quick Buy</CardTitle>
               </CardHeader>
-              <CardContent>
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              <CardContent className="px-4 sm:px-6">
+                <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
                   {["500", "1000", "2500", "5000"].map((amount) => (
                     <Button
                       key={amount}
                       variant="outline"
-                      className="glassmorphism h-16 flex flex-col bg-transparent"
+                      className="glassmorphism h-14 sm:h-16 flex flex-col bg-transparent"
                       onClick={() => setGoldAmount(amount)}
                     >
-                      <span className="text-lg font-bold">₹{amount}</span>
+                      <span className="text-base sm:text-lg font-bold">₹{amount}</span>
                       <span className="text-xs text-muted-foreground">
                         {goldPrice ? (Number.parseInt(amount) / goldPrice.price).toFixed(2) : 'Loading...'}g
                       </span>
@@ -1445,23 +1261,23 @@ export default function AuroraGoldApp() {
         {/* Portfolio Page */}
         {currentPage === "portfolio" && user && portfolio && (
           <div className="space-y-6">
-            <div className="grid gap-6 md:grid-cols-3">
-              <Card className="neumorphism border-border/20">
-                <CardHeader>
+            <div className="grid gap-4 sm:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+              <Card className="neumorphism border-border/20 mx-2 sm:mx-0">
+                <CardHeader className="px-4 sm:px-6 pb-2">
                   <CardTitle className="text-sm font-medium">Total Gold</CardTitle>
                 </CardHeader>
-                <CardContent>
-                  <div className="text-2xl font-bold text-primary">{portfolio.summary.totalGoldGrams.toFixed(2)}g</div>
+                <CardContent className="px-4 sm:px-6">
+                  <div className="text-xl sm:text-2xl font-bold text-primary">{portfolio.summary.totalGoldGrams.toFixed(2)}g</div>
                   <p className="text-xs text-muted-foreground">≈ ₹{portfolio.summary.currentValue.toLocaleString()}</p>
                 </CardContent>
               </Card>
 
-              <Card className="neumorphism border-border/20">
-                <CardHeader>
+              <Card className="neumorphism border-border/20 mx-2 sm:mx-0">
+                <CardHeader className="px-4 sm:px-6 pb-2">
                   <CardTitle className="text-sm font-medium">Today's P&L</CardTitle>
                 </CardHeader>
-                <CardContent>
-                  <div className={`text-2xl font-bold ${portfolio.todayPerformance.trend === 'up' ? 'text-green-400' : 'text-red-400'}`}>
+                <CardContent className="px-4 sm:px-6">
+                  <div className={`text-xl sm:text-2xl font-bold ${portfolio.todayPerformance.trend === 'up' ? 'text-green-400' : 'text-red-400'}`}>
                     {portfolio.todayPerformance.trend === 'up' ? '+' : ''}₹{portfolio.todayPerformance.change}
                   </div>
                   <p className="text-xs text-muted-foreground">
@@ -1470,12 +1286,12 @@ export default function AuroraGoldApp() {
                 </CardContent>
               </Card>
 
-              <Card className="neumorphism border-border/20">
-                <CardHeader>
+              <Card className="neumorphism border-border/20 mx-2 sm:mx-0 sm:col-span-2 lg:col-span-1">
+                <CardHeader className="px-4 sm:px-6 pb-2">
                   <CardTitle className="text-sm font-medium">Total Return</CardTitle>
                 </CardHeader>
-                <CardContent>
-                  <div className={`text-2xl font-bold ${portfolio.summary.profitLoss >= 0 ? 'text-green-400' : 'text-red-400'}`}>
+                <CardContent className="px-4 sm:px-6">
+                  <div className={`text-xl sm:text-2xl font-bold ${portfolio.summary.profitLoss >= 0 ? 'text-green-400' : 'text-red-400'}`}>
                     {portfolio.summary.profitLoss >= 0 ? '+' : ''}₹{portfolio.summary.profitLoss}
                   </div>
                   <p className="text-xs text-muted-foreground">
@@ -1486,11 +1302,11 @@ export default function AuroraGoldApp() {
             </div>
 
             {/* Recent Transactions */}
-            <Card className="neumorphism border-border/20">
-              <CardHeader>
-                <CardTitle>Recent Transactions</CardTitle>
+            <Card className="neumorphism border-border/20 mx-2 sm:mx-0">
+              <CardHeader className="px-4 sm:px-6">
+                <CardTitle className="text-lg sm:text-xl">Recent Transactions</CardTitle>
               </CardHeader>
-              <CardContent>
+              <CardContent className="px-4 sm:px-6">
                 <div className="space-y-4">
                   {portfolio.recentTransactions.length > 0 ? (
                     portfolio.recentTransactions.map((transaction: any, index: number) => (
@@ -1500,23 +1316,23 @@ export default function AuroraGoldApp() {
                             <Coins className="w-4 h-4 text-primary" />
                           </div>
                           <div>
-                            <p className="font-medium">{transaction.type} Gold</p>
-                            <p className="text-sm text-muted-foreground">
+                            <p className="font-medium text-sm sm:text-base">{transaction.type} Gold</p>
+                            <p className="text-xs sm:text-sm text-muted-foreground">
                               {new Date(transaction.date).toLocaleDateString()}
                             </p>
                           </div>
                         </div>
                         <div className="text-right">
-                          <p className="font-medium">₹{transaction.amountINR.toLocaleString()}</p>
-                          <p className="text-sm text-muted-foreground">{transaction.grams.toFixed(3)}g</p>
+                          <p className="font-medium text-sm sm:text-base">₹{transaction.amountINR.toLocaleString()}</p>
+                          <p className="text-xs sm:text-sm text-muted-foreground">{transaction.grams.toFixed(3)}g</p>
                         </div>
                       </div>
                     ))
                   ) : (
                     <div className="text-center py-8 text-muted-foreground">
                       <Coins className="w-12 h-12 mx-auto mb-4 opacity-50" />
-                      <p>No transactions yet</p>
-                      <p className="text-sm">Start investing in gold to see your history here</p>
+                      <p className="text-sm sm:text-base">No transactions yet</p>
+                      <p className="text-xs sm:text-sm">Start investing in gold to see your history here</p>
                     </div>
                   )}
                 </div>
@@ -1527,10 +1343,10 @@ export default function AuroraGoldApp() {
 
         {/* Portfolio Page - Not logged in */}
         {currentPage === "portfolio" && !user && (
-          <div className="text-center py-16">
-            <User className="w-16 h-16 mx-auto mb-4 opacity-50" />
-            <h2 className="text-2xl font-bold mb-2">Login Required</h2>
-            <p className="text-muted-foreground mb-6">Please log in to view your portfolio</p>
+          <div className="text-center py-16 mx-2 sm:mx-0">
+            <User className="w-12 h-12 sm:w-16 sm:h-16 mx-auto mb-4 opacity-50" />
+            <h2 className="text-xl sm:text-2xl font-bold mb-2">Login Required</h2>
+            <p className="text-muted-foreground mb-6 text-sm sm:text-base">Please log in to view your portfolio</p>
             <Button onClick={() => setCurrentPage('login')} className="glow-gold">
               Login Now
             </Button>
@@ -1540,22 +1356,22 @@ export default function AuroraGoldApp() {
         {/* Profile Page */}
         {currentPage === "profile" && user && (
           <div className="space-y-6">
-            <Card className="neumorphism border-border/20">
-              <CardHeader>
-                <CardTitle>Profile Settings</CardTitle>
-                <CardDescription>Manage your AuroraGold account</CardDescription>
+            <Card className="neumorphism border-border/20 mx-2 sm:mx-0">
+              <CardHeader className="px-4 sm:px-6">
+                <CardTitle className="text-lg sm:text-xl">Profile Settings</CardTitle>
+                <CardDescription className="text-sm">Manage your AuroraGold account</CardDescription>
               </CardHeader>
-              <CardContent className="space-y-6">
+              <CardContent className="space-y-6 px-4 sm:px-6">
                 <div className="flex items-center space-x-4">
-                  <Avatar className="w-16 h-16">
-                    <AvatarFallback className="bg-gradient-to-r from-primary to-chart-2 text-primary-foreground text-xl">
+                  <Avatar className="w-12 h-12 sm:w-16 sm:h-16">
+                    <AvatarFallback className="bg-gradient-to-r from-primary to-chart-2 text-primary-foreground text-lg sm:text-xl">
                       {user.name.charAt(0).toUpperCase()}
                     </AvatarFallback>
                   </Avatar>
                   <div>
-                    <h3 className="text-lg font-semibold">{user.name}</h3>
-                    <p className="text-muted-foreground">{user.email}</p>
-                    <Badge variant={user.kycStatus === 'VERIFIED' ? 'default' : 'secondary'} className="mt-1">
+                    <h3 className="text-base sm:text-lg font-semibold">{user.name}</h3>
+                    <p className="text-muted-foreground text-sm">{user.email}</p>
+                    <Badge variant={user.kycStatus === 'VERIFIED' ? 'default' : 'secondary'} className="mt-1 text-xs">
                       KYC: {user.kycStatus}
                     </Badge>
                   </div>
@@ -1563,33 +1379,33 @@ export default function AuroraGoldApp() {
 
                 <div className="space-y-4">
                   <div>
-                    <h4 className="font-medium mb-2">Investment Goals</h4>
+                    <h4 className="font-medium mb-2 text-sm sm:text-base">Investment Goals</h4>
                     <Progress value={(user.assets.totalInvested / user.preferences.investmentGoal) * 100} className="h-2" />
-                    <p className="text-sm text-muted-foreground mt-1">
+                    <p className="text-xs sm:text-sm text-muted-foreground mt-1">
                       {((user.assets.totalInvested / user.preferences.investmentGoal) * 100).toFixed(1)}% towards your ₹{user.preferences.investmentGoal.toLocaleString()} goal
                     </p>
                   </div>
 
-                  <div className="grid grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div className="p-4 rounded-lg glassmorphism">
-                      <h5 className="font-medium">Risk Level</h5>
-                      <p className="text-sm text-muted-foreground">{user.preferences.riskLevel}</p>
+                      <h5 className="font-medium text-sm sm:text-base">Risk Level</h5>
+                      <p className="text-xs sm:text-sm text-muted-foreground">{user.preferences.riskLevel}</p>
                     </div>
                     <div className="p-4 rounded-lg glassmorphism">
-                      <h5 className="font-medium">Gold Holdings</h5>
-                      <p className="text-sm text-muted-foreground">{user.assets.goldGrams.toFixed(3)}g</p>
+                      <h5 className="font-medium text-sm sm:text-base">Gold Holdings</h5>
+                      <p className="text-xs sm:text-sm text-muted-foreground">{user.assets.goldGrams.toFixed(3)}g</p>
                     </div>
                   </div>
                 </div>
 
                 <div className="space-y-2">
-                  <Button variant="outline" className="w-full glassmorphism bg-transparent">
+                  <Button variant="outline" className="w-full glassmorphism bg-transparent text-sm sm:text-base">
                     Edit Profile
                   </Button>
-                  <Button variant="outline" className="w-full glassmorphism bg-transparent">
+                  <Button variant="outline" className="w-full glassmorphism bg-transparent text-sm sm:text-base">
                     Security Settings
                   </Button>
-                  <Button variant="outline" className="w-full glassmorphism bg-transparent">
+                  <Button variant="outline" className="w-full glassmorphism bg-transparent text-sm sm:text-base">
                     Notification Preferences
                   </Button>
                 </div>
@@ -1600,10 +1416,10 @@ export default function AuroraGoldApp() {
 
         {/* Profile Page - Not logged in */}
         {currentPage === "profile" && !user && (
-          <div className="text-center py-16">
-            <User className="w-16 h-16 mx-auto mb-4 opacity-50" />
-            <h2 className="text-2xl font-bold mb-2">Login Required</h2>
-            <p className="text-muted-foreground mb-6">Please log in to view your profile</p>
+          <div className="text-center py-16 mx-2 sm:mx-0">
+            <User className="w-12 h-12 sm:w-16 sm:h-16 mx-auto mb-4 opacity-50" />
+            <h2 className="text-xl sm:text-2xl font-bold mb-2">Login Required</h2>
+            <p className="text-muted-foreground mb-6 text-sm sm:text-base">Please log in to view your profile</p>
             <Button onClick={() => setCurrentPage('login')} className="glow-gold">
               Login Now
             </Button>
