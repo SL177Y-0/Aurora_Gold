@@ -308,3 +308,84 @@ The modular architecture makes it easy to add:
 - Environment variable documentation
 - Code repository with proper branching
 
+## 🚀 Deployment Guide for Separate Frontend and Backend
+
+### Project Structure
+```
+aurora-gold/
+├── server/           # Backend Node.js server
+│   ├── package.json
+│   └── index.js
+├── package.json      # Root workspace package
+└── ...
+```
+
+### Prerequisites
+- Node.js 18+ 
+- npm or pnpm
+- Render account
+- Vercel account
+
+### Local Development
+```bash
+# Install root dependencies and set up workspaces
+npm install  # or pnpm install
+
+# Run frontend in development
+npm run dev
+
+# Run backend in development
+npm run server:dev
+```
+
+### Render Deployment (Backend)
+1. Create a new Web Service in Render
+2. Connect to your GitHub repository
+3. Configure settings:
+   - **Root Directory**: `server`
+   - **Environment**: Node
+   - **Build Command**: `npm install`
+   - **Start Command**: `npm start`
+   - **Branch**: `main`
+
+#### Required Environment Variables
+```
+NODE_ENV=production
+PORT=10000
+MONGODB_URI=your_mongodb_connection_string
+JWT_SECRET=long_random_secret_key
+FRONTEND_URL=https://your-vercel-domain.vercel.app
+RAZORPAY_KEY_ID=your_razorpay_key
+RAZORPAY_SECRET=your_razorpay_secret
+```
+
+### Vercel Deployment (Frontend)
+1. Import your GitHub repository
+2. Configure build settings:
+   - **Framework Preset**: Next.js
+   - **Build Command**: `npm run build`
+   - **Output Directory**: `.next`
+
+#### Frontend Environment Variables
+```
+NEXT_PUBLIC_API_BASE_URL=https://your-render-backend-domain.onrender.com/api
+NODE_ENV=production
+NEXT_PUBLIC_RAZORPAY_KEY_ID=your_razorpay_key
+```
+
+### 🔒 Security Best Practices
+- Use strong, unique secrets
+- Rotate credentials periodically
+- Enable IP restrictions
+- Use environment-specific configurations
+
+### 🛠 Troubleshooting
+- Check deployment logs in Render and Vercel
+- Verify environment variables
+- Ensure CORS settings are correct
+
+### 📊 Monitoring
+- Set up monitoring in Render and Vercel dashboards
+- Use error tracking services like Sentry
+- Monitor performance and set up alerts
+

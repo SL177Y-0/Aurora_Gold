@@ -4,10 +4,10 @@ const cors = require('cors')
 const mongoose = require('mongoose')
 const { 
   errorHandler, 
-  createRateLimit, 
   sanitizeInput, 
   securityHeaders 
 } = require('./middleware/errorHandler')
+const rateLimit = require('express-rate-limit')
 
 // Import routes
 const authRoutes = require('./routes/auth')
@@ -16,18 +16,42 @@ const goldRoutes = require('./routes/gold')
 const userRoutes = require('./routes/user')
 
 const app = express()
-const PORT = process.env.PORT || 3001
 
 // Middleware
 app.use(securityHeaders)
+const FRONTEND_URL = process.env.FRONTEND_URL || 'http://localhost:3000'
+
 app.use(cors({
   origin: process.env.NODE_ENV === 'production' 
-    ? ['https://your-domain.com'] 
+    ? [FRONTEND_URL, 'https://aurora-gold-pi.vercel.app'] 
     : ['http://localhost:3000', 'http://localhost:3002'],
   credentials: true
 }))
 
-// Rate limiting
+// Trust proxy for accurate IP detection in cloud environments
+app.set('trust proxy', true)
+
+// Modify rate limiting to work with proxied environments
+const createRateLimit = ({ max, windowMs }) => {
+  return rateLimit({
+    windowMs: windowMs,
+    max: max,
+    standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
+    legacyHeaders: false, // Disable the `X-RateLimit-*` headers
+    keyGenerator: (req) => {
+      // Use X-Forwarded-For header or fallback to IP
+      return req.get('X-Forwarded-For')?.split(',')[0].trim() || req.ip
+    },
+    handler: (req, res) => {
+      res.status(429).json({
+        error: 'Too many requests, please try again later.',
+        retryAfter: Math.ceil(req.rateLimit.resetTime / 1000 - Date.now() / 1000)
+      })
+    }
+  })
+}
+
+// Update rate limiting middleware to use the new configuration
 app.use('/api/auth', createRateLimit({ max: 10, windowMs: 15 * 60 * 1000 }))
 app.use('/api/chat', createRateLimit({ max: 50, windowMs: 15 * 60 * 1000 }))
 app.use('/api', createRateLimit({ max: 100, windowMs: 15 * 60 * 1000 }))
@@ -93,10 +117,43 @@ if (!process.env.JWT_SECRET) {
   console.error('Please set JWT_SECRET in your .env file.')
 }
 
-// Start server
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`)
-  console.log(`Environment: ${process.env.NODE_ENV}`)
-})
+// Dynamic port configuration for cloud deployment
+const PORT = process.env.PORT || process.env.NODE_PORT || 3001
+
+// Enhanced server startup with detailed logging
+const startServer = () => {
+  const server = app.listen(PORT, '0.0.0.0', () => {
+    console.log(`🚀 Server running successfully!`);
+    console.log(`   • Port: ${PORT}`);
+    console.log(`   • Environment: ${process.env.NODE_ENV || 'development'}`);
+    console.log(`   • Timestamp: ${new Date().toISOString()}`);
+    
+    // Optional: Log network interfaces for debugging
+    const os = require('os');
+    const networkInterfaces = os.networkInterfaces();
+    console.log('   • Network Interfaces:');
+    Object.keys(networkInterfaces).forEach((interfaceName) => {
+      networkInterfaces[interfaceName].forEach((details) => {
+        if (details.family === 'IPv4' && !details.internal) {
+          console.log(`     - ${interfaceName}: ${details.address}`);
+        }
+      });
+    });
+  });
+
+  // Graceful shutdown handling
+  process.on('SIGTERM', () => {
+    console.log('SIGTERM received. Shutting down gracefully...');
+    server.close(() => {
+      console.log('Server closed. Process terminated.');
+      process.exit(0);
+    });
+  });
+
+  return server;
+};
+
+// Start the server
+startServer();
 
 module.exports = app

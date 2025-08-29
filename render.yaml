@@ -1,0 +1,38 @@
+services:
+  - type: web
+    name: aurora-gold-backend
+    env: node
+    region: oregon
+    rootDir: server
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: MONGODB_URI
+        fromDatabase:
+          name: aurora-gold-db
+          property: connectionString
+      - key: JWT_SECRET
+        generateValue: true
+      - key: FRONTEND_URL
+        value: https://your-vercel-frontend-domain.vercel.app
+
+databases:
+  - name: aurora-gold-db
+    region: oregon
+    plan: free
+    databaseName: auroragold
+    ipAllowList: []  # Add your IP or leave empty for all IPs
+
+envVarGroups:
+  - name: production-secrets
+    envVars:
+      - key: RAZORPAY_KEY_ID
+        sync: false
+      - key: RAZORPAY_SECRET
+        sync: false
+      - key: GEMINI_API_KEY
+        sync: false 
