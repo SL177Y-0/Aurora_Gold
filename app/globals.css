@@ -1,6 +1,7 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
 
 :root {
   /* Updated color tokens for AuroraGold futuristic fintech theme */
@@ -75,6 +76,47 @@
   --sidebar-ring: oklch(0.85 0.18 85 / 0.5);
 }
 
+@theme inline {
+  --font-sans: var(--font-unica-one);
+  --font-mono: var(--font-geist-mono);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
@@ -82,106 +124,117 @@
   
   html {
     scroll-behavior: smooth;
+    background: oklch(0.12 0.05 240) !important;
+    margin: 0;
+    padding: 0;
   }
   
   body {
     @apply bg-background text-foreground;
-    font-feature-settings: "rlig" 1, "calt" 1;
+    margin: 0;
+    padding: 0;
+    background: oklch(0.12 0.05 240) !important;
+  }
+  
+  /* Ensure root elements have no grey background */
+  #__next, [data-reactroot] {
+    background: oklch(0.12 0.05 240) !important;
+    min-height: 100vh;
+  }
+  
+  /* Hide scrollbars globally while maintaining scroll functionality */
+  * {
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* Internet Explorer 10+ */
+  }
+  
+  *::-webkit-scrollbar {
+    display: none; /* Safari and Chrome */
+  }
+  
+  /* Ensure chat message containers also hide scrollbars */
+  .overflow-y-auto {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  
+  .overflow-y-auto::-webkit-scrollbar {
+    display: none;
   }
 }
 
-/* AuroraGold animations and effects */
-@layer components {
-  .aurora-bg {
-    background: linear-gradient(
-      135deg,
-      hsl(var(--background)) 0%,
-      hsl(var(--background)) 30%,
-      hsl(var(--card)) 60%,
-      hsl(var(--background)) 100%
-    );
-    background-size: 400% 400%;
-    animation: aurora-glow 8s ease-in-out infinite;
+/* Added custom animations for aurora effects and futuristic elements */
+@keyframes aurora {
+  0%,
+  100% {
+    background-position: 0% 50%;
   }
-  
-  @keyframes aurora-glow {
-    0%, 100% {
-      background-position: 0% 50%;
-    }
-    50% {
-      background-position: 100% 50%;
-    }
+  50% {
+    background-position: 100% 50%;
   }
-  
-  .glassmorphism {
-    background: rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+@keyframes glow {
+  0%,
+  100% {
+    box-shadow: 0 0 20px oklch(0.8 0.15 85 / 0.3);
   }
-  
-  .neumorphism {
-    background: linear-gradient(
-      145deg,
-      hsl(var(--card) / 0.8),
-      hsl(var(--background) / 0.8)
-    );
-    box-shadow: 
-      20px 20px 60px hsl(var(--background) / 0.7),
-      -20px -20px 60px hsl(var(--card) / 0.3);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+  50% {
+    box-shadow: 0 0 40px oklch(0.8 0.15 85 / 0.6);
   }
-  
-  .glow-gold {
-    background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--chart-2)));
-    box-shadow: 
-      0 0 20px hsl(var(--primary) / 0.3),
-      0 0 40px hsl(var(--primary) / 0.2),
-      0 0 60px hsl(var(--primary) / 0.1);
-    transition: all 0.3s ease;
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px);
   }
-  
-  .glow-gold:hover {
-    box-shadow: 
-      0 0 30px hsl(var(--primary) / 0.5),
-      0 0 60px hsl(var(--primary) / 0.3),
-      0 0 90px hsl(var(--primary) / 0.2);
-    transform: translateY(-2px);
+  50% {
+    transform: translateY(-10px);
   }
-  
-  .float-animation {
-    animation: float 3s ease-in-out infinite;
+}
+
+@keyframes pulse-gold {
+  0%,
+  100% {
+    opacity: 1;
   }
-  
-  @keyframes float {
-    0%, 100% {
-      transform: translateY(0px);
-    }
-    50% {
-      transform: translateY(-10px);
-    }
+  50% {
+    opacity: 0.7;
   }
-  
-  .pulse-gold {
-    animation: pulse-gold 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-  }
-  
-  @keyframes pulse-gold {
-    0%, 100% {
-      opacity: 1;
-      box-shadow: 0 0 0 0 hsl(var(--primary) / 0.7);
-    }
-    50% {
-      opacity: 0.8;
-      box-shadow: 0 0 0 10px hsl(var(--primary) / 0);
-    }
-  }
-  
-  .gradient-text {
-    background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--chart-2)));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
+}
+
+.aurora-bg {
+  background: linear-gradient(
+    -45deg,
+    oklch(0.12 0.05 240),
+    oklch(0.15 0.08 260),
+    oklch(0.18 0.06 220),
+    oklch(0.12 0.05 240)
+  );
+  background-size: 400% 400%;
+  animation: aurora 15s ease infinite;
+}
+
+.glow-gold {
+  animation: glow 2s ease-in-out infinite alternate;
+}
+
+.float-animation {
+  animation: float 3s ease-in-out infinite;
+}
+
+.pulse-gold {
+  animation: pulse-gold 2s ease-in-out infinite;
+}
+
+.glassmorphism {
+  background: oklch(0.95 0.01 240 / 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid oklch(0.8 0.15 85 / 0.2);
+}
+
+.neumorphism {
+  background: oklch(0.15 0.05 240);
+  box-shadow: 8px 8px 16px oklch(0.08 0.05 240), -8px -8px 16px oklch(0.22 0.05 240);
 }
