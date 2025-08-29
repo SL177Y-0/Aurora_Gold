@@ -1,3 +1,9 @@
+
+
+
+https://github.com/user-attachments/assets/8fb89a25-07e3-4da8-9d5d-0571c177206b
+
+
 # 🌟 Aurora Gold - AI-Powered Digital Gold Investment Platform
 
 *Where artificial intelligence meets precious metals investment*
